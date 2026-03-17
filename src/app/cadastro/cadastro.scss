@@ -1,6 +1,3 @@
-
-
-/* 1. Reset e Centralização do Body */
 html, body {
   margin: 0;
   padding: 0;
@@ -18,7 +15,6 @@ body {
   justify-content: center;
 }
 
-/* 2. Ajuste do Container e da Box */
 .container {
   width: 100%;
   display: flex;
@@ -28,7 +24,7 @@ body {
 
 .cadastro-box {
   width: 100%;
-  max-width: 420px; /* Um pouco mais largo para respiro */
+  max-width: 420px; 
   background: white; 
   padding: 40px;
   border-radius: 20px;
@@ -36,7 +32,6 @@ body {
   box-sizing: border-box;
 }
 
-/* 3. Estilização dos Inputs (O "Pulo do Gato") */
 .form-group, .password-field, .file-group {
   margin-bottom: 20px;
   display: flex;
@@ -48,7 +43,7 @@ label {
   font-weight: 600;
   margin-bottom: 8px;
   color: #333;
-  text-align: left; /* Garante que o label fique à esquerda */
+  text-align: left; 
 }
 
 input {
@@ -58,7 +53,7 @@ input {
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.3s ease;
-  box-sizing: border-box; /* Essencial para o padding não quebrar a largura */
+  box-sizing: border-box; 
   background-color: #f9f9f9;
 }
 
@@ -69,16 +64,15 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
-/* 4. Ajuste da Logo e Header */
 .header {
   text-align: center;
   margin-bottom: 25px;
 }
 
 .logo {
-  width: 100px; /* Tamanho fixo para o container da logo */
+  width: 100px; 
   margin: 0 auto 10px auto;
-  background: transparent; /* Removido o fundo laranja que cobria a imagem */
+  background: transparent;
 }
 
 .logo img {
@@ -93,7 +87,6 @@ input:focus {
   margin: 0;
 }
 
-/* 5. Botão */
 .cadastro-button {
   width: 100%;
   padding: 14px;
