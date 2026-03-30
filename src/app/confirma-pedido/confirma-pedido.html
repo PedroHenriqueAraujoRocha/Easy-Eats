@@ -1,0 +1,90 @@
+<div class="page">
+
+  <div class="confirmar-pedido">
+
+    <button class="btn-voltar">← Voltar</button>
+
+    <!-- RESUMO -->
+    <div class="card">
+      <div class="titulo">RESUMO DO PEDIDO</div>
+
+      <div class="item-resumo">
+        <span>🥤 Coca-Cola x1</span>
+        <span>R$ 7.00</span>
+      </div>
+
+      <div class="total">
+        <span>Total</span>
+        <span>R$ 7.00</span>
+      </div>
+    </div>
+
+    <!-- TIPO -->
+    <div class="card">
+      <div class="titulo">TIPO DO PEDIDO</div>
+
+      <div class="opcoes">
+        <button   
+    (click)="selecionarTipo('local')"
+    [class.selected]="tipoPedido() === 'local'">
+          <div class="icone">🍽️</div>
+          <div>Comer no Local</div>
+          <small>O cliente vai consumir aqui</small>
+        </button>
+
+        <button class="selected" (click)="selecionarTipo('levar')"
+    [class.selected]="tipoPedido() === 'levar'">
+          <div class="icone">📍</div>
+          <div>Para Levar</div>
+          <small>O cliente vai levar o pedido</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGAMENTO -->
+    <div class="card">
+      <div class="titulo">PAGAMENTO</div>
+
+      <div class="switch-linha">
+        <input type="checkbox" type="checkbox"
+    [checked]="pagarDepois()"
+    (change)="togglePagarDepois()" />
+        <span>Pagar depois</span>
+      </div>
+
+<div class="formas-pagamento">
+
+  <button
+    (click)="selecionarPagamento('dinheiro')"
+    [class.selected]="formaPagamento() === 'dinheiro'">
+    Dinheiro
+  </button>
+
+  <button
+    (click)="selecionarPagamento('pix')"
+    [class.selected]="formaPagamento() === 'pix'">
+    PIX
+  </button>
+
+  <button
+    (click)="selecionarPagamento('credito')"
+    [class.selected]="formaPagamento() === 'credito'">
+    Crédito
+  </button>
+
+  <button
+    (click)="selecionarPagamento('debito')"
+    [class.selected]="formaPagamento() === 'debito'">
+    Débito
+  </button>
+
+</div>
+
+    <!-- BOTÃO -->
+    <button class="btn-enviar">
+      Enviar Pedido — R$ 7.00
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,137 @@
+/* Página */
+.page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  display: flex;
+  justify-content: center;   /* CENTRALIZA */
+  padding-top: 30px;
+}
+
+/* Container */
+.confirmar-pedido {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Botão voltar */
+.btn-voltar {
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Títulos */
+.titulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+/* Resumo */
+.item-resumo {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  font-weight: bold;
+  color: #f97316;
+}
+
+/* Opções */
+.opcoes {
+  display: flex;
+  gap: 12px;
+}
+
+.opcoes button {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.opcoes button small {
+  display: block;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Selecionado */
+.selected {
+  border-color: #f97316 !important;
+  background: #fff7ed !important;
+  color: #f97316;
+}
+
+/* Pagamento */
+.switch-linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Grid pagamento */
+.formas-pagamento {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.formas-pagamento button {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Botão enviar */
+.btn-enviar {
+  width: 100%;
+  background: #f4b37a;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-enviar:hover {
+  background: #f97316;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .opcoes {
+    flex-direction: column;
+  }
+
+  .formas-pagamento {
+    grid-template-columns: 1fr;
+  }
+}
