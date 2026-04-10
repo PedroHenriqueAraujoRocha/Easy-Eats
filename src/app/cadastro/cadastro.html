@@ -38,7 +38,7 @@
           <input type="text" placeholder="(00) 00000-0000" formControlName="telefone" />
 
           <small *ngIf="form.get('telefone')?.touched && form.get('telefone')?.errors">
-           <p class="msg-validacoes">{{ mensagensValidacoes.telefone.required }}</p>
+            <p class="msg-validacoes">{{ mensagensValidacoes.telefone.required }}</p>
           </small>
         </div>
 
@@ -66,8 +66,7 @@
 
           <small *ngIf="form.get('senha')?.touched && form.get('senha')?.errors">
             <p class="msg-validacoes">{{ mensagensValidacoes.senha.required }}</p>
-            </small>
-
+          </small>
         </div>
 
         <div class="password-field">
@@ -85,16 +84,10 @@
 
           <small *ngIf="form.get('senha')?.touched && form.get('senha')?.errors">
             <p class="msg-validacoes">{{ mensagensValidacoes.senha.required }}</p>
-            </small>
-
+          </small>
         </div>
 
-        <button type="submit"class="btn-padrao">
-          Cadastrar
-        </button>
-        <p class="login-link">
-          <a href="/login">Já tem uma conta? Faça login</a>
-        </p>
+        <button type="submit" class="btn-padrao">Cadastrar</button>
       </form>
       <p class="footer">EasyEats POS © {{ currentYear }}</p>
     </div>
