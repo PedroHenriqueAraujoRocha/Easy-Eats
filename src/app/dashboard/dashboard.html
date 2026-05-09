@@ -1,5 +1,5 @@
 <div class="container-padrao">
-  <h1>Painel</h1>
+  <h2>Painel</h2>
   <div class="sub">sábado, 21 de março</div>
 
   <div class="grid">
@@ -32,21 +32,21 @@
     <div class="item">
       <span>#001 João</span>
       @if (statusPedido === statusEnum.PREPARANDO) {
-        <span>R$ 70.00 <span class="status">preparando</span></span>
+        <span>R$ 70.00 <span class="status preparando">preparando</span></span>
       }
 
       @if (statusPedido === statusEnum.PRONTO) {
-        <span>R$ 70.00 <span class="status">pronto</span></span>
+        <span>R$ 70.00 <span class="status pronto">pronto</span></span>
       }
 
       @if (statusPedido === statusEnum.ENTREGUE) {
-        <span>R$ 70.00 <span class="status">entregue</span></span>
+        <span>R$ 70.00 <span class="status entregue">entregue</span></span>
       }
     </div>
 
     <div class="item">
       <span>#002 Maria</span>
-      <span>R$ 42.00 <span class="status">preparando</span></span>
+      <span>R$ 42.00 <span class="status preparando">preparando</span></span>
     </div>
     <app-navbar></app-navbar>
   </div>

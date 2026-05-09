@@ -21,22 +21,6 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
-}
 
 /* --- ESTILOS DO HISTÓRICO DE VENDAS --- */
 
@@ -150,28 +134,7 @@ h2 {
   color: #777;
 }
 
-/* Status das tags */
-.status {
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
 
-.status.preparando {
-  background: #ffe0b2;
-  color: #e67e22;
-}
-
-.status.aguardando {
-  background: #e0f7fa;
-  color: #0097a7;
-}
-
-.status.pronto {
-  background: #d4edda;
-  color: #28a745;
-}
 
 /* --- NAVBAR INFERIOR --- */
 .bottom-nav {
