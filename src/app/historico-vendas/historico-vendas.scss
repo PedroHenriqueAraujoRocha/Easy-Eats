@@ -21,22 +21,6 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
-}
 
 /* --- ESTILOS DO HISTÓRICO DE VENDAS --- */
 
@@ -57,27 +41,57 @@ h2 {
 
 .card.kpi {
   display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+ 
+  
+}
+
+.card.kpi > div {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
+  width: 100%;
 }
 
 .card.kpi .icon {
   font-size: 24px;
-  background: #f0f0f0;
+  background: #ff6b00;
   width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  color: #ffffff;
 }
 
 .valor {
   font-size: 22px;
   font-weight: bold;
-  display: block;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
+  margin-top: 8px;
+  color: #ff6b00;
 }
 
+.valor-numero {
+  font-weight: bold;
+}
+
+.valor-pedido {
+  font-size: 22px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
+  margin-top: 8px;
+  color: #222222;
+}
 /* Campo de busca */
 .input-busca {
   width: 100%;
@@ -86,10 +100,17 @@ h2 {
   border-radius: 8px;
   margin-bottom: 20px;
   font-size: 16px;
-  box-sizing: border-box; /* Garante que o padding não quebre a largura */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
 }
 
+.input-busca:focus {
+  border-color: #ff6b00; 
+  outline: none; 
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+}
 /* Botões de filtro */
+
 .filtros {
   display: flex;
   gap: 10px;
@@ -148,45 +169,6 @@ h2 {
   border-top: 1px solid #eee;
   padding-top: 10px;
   color: #777;
-}
-
-/* Status das tags */
-.status {
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.status.preparando {
-  background: #ffe0b2;
-  color: #e67e22;
-}
-
-.status.aguardando {
-  background: #e0f7fa;
-  color: #0097a7;
-}
-
-.status.pronto {
-  background: #d4edda;
-  color: #28a745;
-}
-
-/* --- NAVBAR INFERIOR --- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-top: 1px solid #dee2e6;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 8px 0;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1030;
 }
 
 .bottom-nav button {

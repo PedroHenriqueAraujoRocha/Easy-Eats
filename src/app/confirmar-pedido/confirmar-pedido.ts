@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-confirmar-ped',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './confirmar-ped.html',
-  styleUrls: ['./confirmar-ped.scss']
+  templateUrl: './confirmar-pedido.html',
+  styleUrls: ['./confirmar-pedido.scss']
 })
 export class ConfirmarPedComponent {
   tipoPedido: 'local' | 'levar' = 'local';
