@@ -6,7 +6,7 @@ import { email } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-perfil-admin',
-  imports: [RouterLink, RouterLinkActive, Navbar, FormsModule],
+  imports: [RouterLink, Navbar, FormsModule],
   templateUrl: './perfilAdmin.html',
   styleUrl: './perfilAdmin.scss',
 })
