@@ -10,7 +10,7 @@ import { Financeiro } from './financeiro/financeiro';
 import { NovoPedido } from './novo-pedido/novo-pedido';
 import { PerfilAdmin } from './perfil-admin/perfilAdmin';
 import { PerfilGarcom } from './perfil-garcom/perfilGarcom';
-import { CadastroProdutoComponent } from './cadastroProduto/cadastroProduto';
+import { CadastroProdutoComponent } from './cadastro-produto/cadastroProduto';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
