@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { Login } from './login/login';
 import { Cadastro } from './cadastro/cadastro';
 import { DashboardComponent } from './dashboard/dashboard';
-import { ComponentFila } from './Fila/component.fila';
-import { ConfirmarPedComponent } from './confirmar-ped/confirmar-ped';
+import { ComponentFila } from './fila/component.fila';
+import { ConfirmarPedComponent } from './confirmar-pedido/confirmar-pedido';
 import { ControleEstoque } from './controle-estoque/controle-estoque';
 import { HistoricoVendasComponent } from './historico-vendas/historico-vendas';
 import { Financeiro } from './financeiro/financeiro';
@@ -74,5 +74,5 @@ export const routes: Routes = [
     path: 'cadastro-produto',
     component: CadastroProdutoComponent,
   },
-  
+
 ];
