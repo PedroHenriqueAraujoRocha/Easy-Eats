@@ -1,5 +1,5 @@
-<div class="container">
-  <h1>Painel</h1>
+<div class="container-padrao">
+  <h2>Painel</h2>
   <div class="sub">sábado, 21 de março</div>
 
   <div class="grid">
@@ -32,49 +32,22 @@
     <div class="item">
       <span>#001 João</span>
       @if (statusPedido === statusEnum.PREPARANDO) {
-        <span>R$ 70.00 <span class="status">preparando</span></span>
+        <span>R$ 70.00 <span class="status preparando">preparando</span></span>
       }
 
       @if (statusPedido === statusEnum.PRONTO) {
-        <span>R$ 70.00 <span class="status">pronto</span></span>
+        <span>R$ 70.00 <span class="status pronto">pronto</span></span>
       }
 
       @if (statusPedido === statusEnum.ENTREGUE) {
-        <span>R$ 70.00 <span class="status">entregue</span></span>
+        <span>R$ 70.00 <span class="status entregue">entregue</span></span>
       }
     </div>
 
     <div class="item">
       <span>#002 Maria</span>
-      <span>R$ 42.00 <span class="status">preparando</span></span>
+      <span>R$ 42.00 <span class="status preparando">preparando</span></span>
     </div>
-
-    <!-- Menu inferior com ícones -->
-    <div class="bottom-nav">
-      <button type="button" routerLink="/dashboard" routerLinkActive="active">
-        <i class="bi bi-house-door"></i>
-        <span>Painel</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/novo-pedido')">
-        <i class="bi bi-cart"></i>
-        <span>Pedido</span>
-      </button>
-
-      <button (click)="acessarRota('/fila')" type="button">
-        <i class="bi bi-list-task"></i>
-        <span>Fila</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/historico-vendas')">
-        <i class="bi bi-clock-history"></i>
-        <span>Histórico</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/perfil-admin')">
-        <i class="bi bi-person-circle"></i>
-        <span>Perfil</span>
-      </button>
-    </div>
+    <app-navbar></app-navbar>
   </div>
 </div>

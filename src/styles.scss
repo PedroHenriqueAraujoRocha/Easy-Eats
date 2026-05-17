@@ -1,9 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
 body {
   margin: 0;
 }
 * {
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+//container padrão
+.container-padrao {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .msg-validacoes {
@@ -51,4 +64,32 @@ body {
 
 .btn-padrao:hover {
   background: #e65a00;
+}
+
+/* Status das tags */
+.status {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status.preparando {
+  background: #ffe0b2;
+  color: #e67e22;
+}
+
+.status.aguardando {
+  background: #e0f7fa;
+  color: #0097a7;
+}
+
+.status.pronto {
+  background: #d4edda;
+  color: #28a745;
+}
+
+.status.entregue {
+  background: #e8eaf6;
+  color: #3f51b5;
 }

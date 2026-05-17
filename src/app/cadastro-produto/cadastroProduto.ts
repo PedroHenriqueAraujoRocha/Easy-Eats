@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Navbar } from '../../components/navbar';
 
 @Component({
   selector: 'app-cadastro-produto',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Navbar],
   templateUrl: './cadastroProduto.html',
   styleUrls: ['./cadastroProduto.scss'],
 })

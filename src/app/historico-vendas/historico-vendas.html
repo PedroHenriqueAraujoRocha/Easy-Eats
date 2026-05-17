@@ -1,25 +1,25 @@
-<div class="container">
-  <h2>Histórico de Vendas</h2>
+<div class="container-padrao">
+  <h2 class="titulo-padrao">Histórico de Vendas</h2>
 
   <div class="cards">
     <div class="card kpi">
       <div class="icon">$</div>
       <div>
-        <span class="valor">R$ 178.00</span>
-        <small>Total filtrado</small>
+        <span class="valor">Valor total</span>
+        <small class="valor-numero">R$ 178.00</small>
       </div>
     </div>
 
     <div class="card kpi">
       <div class="icon">🧾</div>
       <div>
-        <span class="valor">3</span>
-        <small>Pedidos</small>
+        <span class="valor">Pedidos</span>
+        <small class="valor-numero">3</small>
       </div>
     </div>
   </div>
 
-  <input type="text" placeholder="🔍 Buscar por nome ou #pedido" class="input-busca" />
+  <input type="text" placeholder="Buscar por nome ou #pedido" class="input-busca" />
 
   <div class="filtros">
     <button [class.ativo]="filtroSelecionado === 'todos'" (click)="selecionarFiltro('todos')">
@@ -57,7 +57,7 @@
 
       <div class="footer">
         <span>02:21</span>
-        <strong class="valor">R$ 70.00</strong>
+        <strong class="valor-pedido">R$ 70.00</strong>
       </div>
     </div>
 
@@ -74,35 +74,10 @@
 
       <div class="footer">
         <span>02:21</span>
-        <strong class="valor">R$ 42.00</strong>
+        <strong class="valor-pedido">R$ 42.00</strong>
       </div>
     </div>
 
-    <div class="bottom-nav">
-      <button type="button" (click)="acessarRota('/dashboard')">
-        <i class="bi bi-house-door"></i>
-        <span>Painel</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/novo-pedido')">
-        <i class="bi bi-cart"></i>
-        <span>Pedido</span>
-      </button>
-
-      <button (click)="acessarRota('/fila')" type="button">
-        <i class="bi bi-list-task"></i>
-        <span>Fila</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/historico-vendas')">
-        <i class="bi bi-clock-history"></i>
-        <span>Histórico</span>
-      </button>
-
-      <button type="button" (click)="acessarRota('/perfil-admin')">
-        <i class="bi bi-person-circle"></i>
-        <span>Perfil</span>
-      </button>
-    </div>
+    <app-navbar></app-navbar>
   </div>
 </div>

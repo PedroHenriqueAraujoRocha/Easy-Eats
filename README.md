@@ -65,3 +65,17 @@ Para instalar a mesma versão que todos os integrantes do projeto, rode:
 ```bash
 npm install
 ```
+
+## Arquitetura de arquivos e pastas
+
+nome padrão das pastas deve ser escrita em padrão kebab-case.
+
+EXEMPLO DE PASTA: `exemplo-pasta`
+
+nome padrão dos arquivos deve ser escrita em padrão camelCase.
+
+EXEMPLO DE ARQUIVO: `exemploArquivo.ts`
+
+
+
+
