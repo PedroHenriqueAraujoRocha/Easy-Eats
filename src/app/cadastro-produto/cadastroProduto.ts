@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Navbar } from '../../components/navbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -12,6 +13,7 @@ import { Navbar } from '../../components/navbar';
 })
 export class CadastroProdutoComponent {
   currentYear = new Date().getFullYear();
+  private router = inject(Router);
 
   form = new FormGroup({
     nome: new FormControl('', Validators.required),
@@ -19,6 +21,9 @@ export class CadastroProdutoComponent {
     preco: new FormControl('', Validators.required),
     estoque: new FormControl('', Validators.required),
   });
+  protected acessarRota(rota: string) {
+    this.router.navigate([rota]);
+  }
 
   salvar() {
     if (this.form.valid) {
