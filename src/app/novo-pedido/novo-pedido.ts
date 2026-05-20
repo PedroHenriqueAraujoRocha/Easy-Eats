@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Navbar } from '../../components/navbar';
+import { ModalProdutoComponent } from "../utils/modal/modalProduto";
 
 @Component({
   selector: 'app-novo-pedido',
   standalone: true,
-  imports: [CommonModule, FormsModule, Navbar],
+  imports: [CommonModule, FormsModule, Navbar, ModalProdutoComponent],
   templateUrl: './novo-pedido.html',
   styleUrls: ['./novo-pedido.scss'],
 })
@@ -184,6 +185,7 @@ export class NovoPedido {
   ];
 
   carrinho: any[] = [];
+  produtoSelecionado: any = null;
 
   protected acessarRota(rota: string) {
     this.router.navigate([rota]);
@@ -226,16 +228,18 @@ export class NovoPedido {
 
   confirmarPedido() {
     console.log('Pedido:', this.carrinho);
+    this.carrinho = [];
+    this.cliente = '';
+
   }
   produtoSelecionado: any = null;
   modalAberto = false;
 
   abrirDetalhes(produto: any) {
     this.produtoSelecionado = produto;
-    this.modalAberto = true;
   }
 
   fecharModal() {
-    this.modalAberto = false;
-  }
+  this.produtoSelecionado = null;
+}
 }

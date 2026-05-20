@@ -78,5 +78,14 @@
     </div>
 
     <app-navbar></app-navbar>
+    
+  @if (produtoSelecionado) {
+  <app-modal-produto
+  [produto]="produtoSelecionado"
+  (fechar)="fecharModal()"
+  (adicionar)="adicionarAoCarrinho($event)">
+  </app-modal-produto>
+  }
+
   </div>
 </div>
