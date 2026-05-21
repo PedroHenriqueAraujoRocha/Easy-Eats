@@ -6,30 +6,17 @@
         <i class="bi bi-x-lg"></i>
       </button>
 
-      <div class="modal-header">
-        <div class="icone-confirmacao">
-          <i class="bi bi-question-circle" style="font-size: 48px; color: #ff6b00;"></i>
+      <div class="modal-header sem-borda">
+        <div class="icone-sucesso">
+          <i class="bi bi-check-circle-fill" style="font-size: 56px; color: #4CAF50;"></i>
         </div>
-        <h3>Confirmar Cadastro</h3>
-        <span class="subtitulo">Verifique os dados antes de salvar.</span>
+        <h3>Produto Cadastrado!</h3>
+        <span class="subtitulo">O produto foi salvo com sucesso no sistema.</span>
       </div>
 
-      <div class="modal-body resumo-box">
-        <div class="emoji-medio">{{ produto.emoji }}</div>
-        <h4>{{ produto.nome }}</h4>
-        <span class="preco-destaque">R$ {{ produto.preco.toFixed(2) }}</span>
-        
-        <p class="descricao mt-2">
-          Categoria: <strong>{{ produto.categoria || 'Não informada' }}</strong>
-        </p>
-      </div>
-
-      <div class="modal-footer botoes-lado-a-lado">
-        <button class="btn-cancelar" (click)="fecharModal()">
-          Cancelar
-        </button>
-        <button class="btn-salvar" (click)="confirmarCadastro()">
-          Salvar Produto
+      <div class="modal-footer">
+        <button class="btn-sucesso" (click)="fecharModal()">
+          Entendi
         </button>
       </div>
 

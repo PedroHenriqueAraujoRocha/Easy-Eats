@@ -17,12 +17,13 @@
 .modal-content {
   background: white;
   width: 90%;
-  max-width: 380px;
+  max-width: 350px; /* Um pouco mais enxuto por ser apenas um aviso */
   border-radius: 16px;
-  padding: 24px;
+  padding: 30px 24px;
   position: relative;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.3s ease-out;
+  text-align: center;
 }
 
 @keyframes slideUp {
@@ -30,7 +31,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Botão de Fechar */
+/* Botão de Fechar superior */
 .btn-fechar {
   position: absolute;
   top: 15px;
@@ -49,52 +50,40 @@
 }
 
 .btn-fechar:hover {
-  background: #ff6b00;
-  color: white;
+  background: #e0e0e0;
+  color: #333;
 }
 
-/* Header */
-.modal-header {
+/* Header e Textos */
+.modal-header.sem-borda {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  border-bottom: 1px solid #eaeaea;
-  padding-bottom: 15px;
+  border-bottom: none; /* Removido para dar um visual mais limpo */
+  margin-bottom: 20px;
+}
+
+.icone-sucesso {
   margin-bottom: 15px;
 }
 
-.emoji-grande {
-  font-size: 60px;
-  margin-bottom: 10px;
-}
-
 .modal-header h3 {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   font-size: 22px;
   color: #222;
 }
 
-.preco-destaque {
-  color: #ff6b00;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Body */
-.descricao {
+.subtitulo {
   color: #666;
-  text-align: center;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
-  margin-bottom: 20px;
 }
 
-/* Footer */
-.btn-adicionar {
+/* Botão de Ação do Footer */
+.btn-sucesso {
   width: 100%;
   padding: 14px;
-  background: #ff6b00;
+  background: #ff6b00; /* Mantive a cor de destaque original do seu projeto */
   color: white;
   border: none;
   border-radius: 10px;
@@ -104,6 +93,6 @@
   transition: background 0.2s;
 }
 
-.btn-adicionar:hover {
+.btn-sucesso:hover {
   background: #e65c00;
 }
