@@ -8,7 +8,7 @@ import { ModalCadastroProduto } from '../../components/modal-cadastro-produto/mo
 @Component({
   selector: 'app-cadastro-produto',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Navbar, ModalCadastroProduto],
+  imports: [CommonModule, ReactiveFormsModule, ModalCadastroProduto],
   templateUrl: './cadastroProduto.html',
   styleUrls: ['./cadastroProduto.scss'],
 })
