@@ -61,7 +61,7 @@
 
       <button class="finalizar" (click)="confirmarPedido()">Finalizar Pedido</button>
     </div>
-    <div class="overlay" *ngIf="modalAberto" (click)="fecharModal()">
+    <div class="overlay" *@if="modalAberto" (click)="fecharModal()">
 
   <div class="modal-produto" (click)="$event.stopPropagation()">
 
