@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Produto {
   id: number;
@@ -14,10 +16,11 @@ interface Produto {
 @Component({
   selector: 'app-financeiro',
   templateUrl: './financeiro.html',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   styleUrls: ['./financeiro.scss']
 })
-export class Financeiro {
+export class Financeiro implements OnInit {
+  private router = inject(Router);
 
   abaSelecionada: 'resumo' | 'vendas' | 'despesas' | 'produtos' = 'resumo';
   filtroSelecionado: 'hoje' | 'semana' | 'periodo' = 'hoje';
@@ -44,6 +47,12 @@ export class Financeiro {
     { id: 5, nome: 'Batata Frita', categoria: 'Lanches', unidade: 'porção', preco: 12, estoque: 2, emoji: '🍟' }
   ];
 
+  produtosFiltrados: Produto[] = [];
+
+  ngOnInit() {
+    this.produtosFiltrados = [...this.produtos];
+  }
+
   selecionarAba(aba: any) {
     this.abaSelecionada = aba;
   }
@@ -52,10 +61,16 @@ export class Financeiro {
     this.filtroSelecionado = filtro;
   }
 
-  get produtosFiltrados() {
-    return this.produtos.filter(p =>
-      p.nome.toLowerCase().includes(this.busca.toLowerCase())
-    );
+  filtrarProdutos() {
+    const termo = this.busca.toLowerCase().trim();
+    
+    if (!termo) {
+      this.produtosFiltrados = [...this.produtos];
+    } else {
+      this.produtosFiltrados = this.produtos.filter(p =>
+        p.nome.toLowerCase().includes(termo)
+      );
+    }
   }
 
   isEstoqueBaixo(p: Produto) {
@@ -73,6 +88,10 @@ export class Financeiro {
   excluir(p: Produto) {
     if (confirm(`Excluir ${p.nome}?`)) {
       this.produtos = this.produtos.filter(x => x.id !== p.id);
+      this.filtrarProdutos();
     }
+  }
+  protected acessarRota(rota: string) {
+    this.router.navigate([rota]);
   }
 }

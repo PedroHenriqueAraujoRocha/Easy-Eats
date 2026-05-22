@@ -1,11 +1,11 @@
 <div class="page-container">
   <div class="header-section">
     <h1>Novo Produto</h1>
-    <button class="btn-voltar" routerLink="/controle-estoque">Voltar</button>
+    <button class="btn-voltar" (click)="acessarRota('/perfil-admin')">Voltar</button>
   </div>
 
   <div class="card-form">
-    <form [formGroup]="form" (ngSubmit)="salvar()">
+    <form [formGroup]="form" (ngSubmit)="abrirModalConfirmacao()">
       <div class="input-group">
         <label>Nome do Produto</label>
         <input type="text" placeholder="Ex: Hambúrguer Clássico" formControlName="nome" />
@@ -35,5 +35,12 @@
       </div>
     </form>
   </div>
-  <app-navbar></app-navbar>
+
+  @if (produtoParaConfirmar) {
+    <app-modal-cadastro-produto
+      [produto]="produtoParaConfirmar"
+      (fechar)="fecharModal()"
+      (confirmar)="finalizarCadastro($event)">
+    </app-modal-cadastro-produto>
+  }
 </div>

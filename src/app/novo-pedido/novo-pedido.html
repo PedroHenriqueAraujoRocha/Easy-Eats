@@ -1,7 +1,7 @@
-<div class="pedido-page">
+<div class="container-padrao page">
   <div class="wrapper">
     <div class="conteudo">
-      <h2>Novo Pedido</h2>
+      <h2 class="titulo-padrao">Novo Pedido</h2>
 
       <input
         type="text"
@@ -104,5 +104,14 @@
     }
 
     <app-navbar></app-navbar>
+    
+  @if (produtoSelecionado) {
+  <app-modal-produto
+  [produto]="produtoSelecionado"
+  (fechar)="fecharModal()"
+  (adicionar)="adicionarAoCarrinho($event)">
+  </app-modal-produto>
+  }
+
   </div>
 </div>
