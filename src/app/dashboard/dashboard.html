@@ -1,53 +1,141 @@
-<div class="container-padrao">
-  <h2>Painel</h2>
-  <div class="sub">sábado, 21 de março</div>
+<div class="dashboard">
 
+  <!-- HERO -->
+  <div class="hero">
+
+    <div class="hero-top">
+      <span class="live-badge">
+        🔥 Boa noite!
+      </span>
+    </div>
+
+    <h1>Painel</h1>
+
+    <p>
+      sábado, 21 de março
+    </p>
+
+    <div class="hero-info">
+      <div>
+        <strong>12</strong>
+        <span>Pedidos hoje</span>
+      </div>
+
+      <div>
+        <strong>R$ 178</strong>
+        <span>Faturamento</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CARDS -->
   <div class="grid">
-    <div class="card">
-      <div class="valor">R$ 178.00</div>
-      <div class="paragrafo">Faturamento</div>
+
+    <div class="card faturamento">
+      <div class="icon">💰</div>
+
+      <div>
+        <div class="valor">R$ 178.00</div>
+        <div class="paragrafo">Faturamento</div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="valor">3</div>
-      <div class="paragrafo">Pedidos Hoje</div>
+    <div class="card pedidos">
+      <div class="icon">📦</div>
+
+      <div>
+        <div class="valor">3</div>
+        <div class="paragrafo">Pedidos Hoje</div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="valor">2</div>
-      <div class="paragrafo">Em Preparo</div>
+    <div class="card preparo">
+      <div class="icon">🔥</div>
+
+      <div>
+        <div class="valor">2</div>
+        <div class="paragrafo">Em Preparo</div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="valor">R$ 59.33</div>
-      <div class="paragrafo">Ticket Médio</div>
+    <div class="card ticket">
+      <div class="icon">📈</div>
+
+      <div>
+        <div class="valor">R$ 59.33</div>
+        <div class="paragrafo">Ticket Médio</div>
+      </div>
     </div>
+
   </div>
 
-  <button class="btn" (click)="acessarRota('/novo-pedido')">+ Novo Pedido</button>
+  <!-- CTA -->
+  <button class="btn" (click)="acessarRota('/novo-pedido')">
+    + Novo Pedido
+  </button>
 
+  <!-- LISTA -->
   <div class="lista">
-    <h3>Últimos Pedidos</h3>
 
-    <div class="item">
-      <span>#001 João</span>
-      @if (statusPedido === statusEnum.PREPARANDO) {
-        <span>R$ 70.00 <span class="status preparando">preparando</span></span>
-      }
+    <div class="lista-header">
+      <h3>Últimos Pedidos</h3>
 
-      @if (statusPedido === statusEnum.PRONTO) {
-        <span>R$ 70.00 <span class="status pronto">pronto</span></span>
-      }
-
-      @if (statusPedido === statusEnum.ENTREGUE) {
-        <span>R$ 70.00 <span class="status entregue">entregue</span></span>
-      }
+      <span>Hoje</span>
     </div>
 
     <div class="item">
-      <span>#002 Maria</span>
-      <span>R$ 42.00 <span class="status preparando">preparando</span></span>
+
+      <div class="pedido-info">
+
+        <div class="avatar">
+          J
+        </div>
+
+        <div>
+          <strong>#001 João</strong>
+          <p>Pedido realizado às 18:42</p>
+        </div>
+
+      </div>
+
+      <div class="pedido-right">
+        <strong>R$ 70.00</strong>
+
+        <span class="status preparando">
+          preparando
+        </span>
+      </div>
+
     </div>
-    <app-navbar></app-navbar>
+
+    <div class="item">
+
+      <div class="pedido-info">
+
+        <div class="avatar maria">
+          M
+        </div>
+
+        <div>
+          <strong>#002 Maria</strong>
+          <p>Pedido realizado às 18:57</p>
+        </div>
+
+      </div>
+
+      <div class="pedido-right">
+        <strong>R$ 42.00</strong>
+
+        <span class="status pronto">
+          pronto
+        </span>
+      </div>
+
+    </div>
+
   </div>
+
+  <app-navbar></app-navbar>
+
 </div>

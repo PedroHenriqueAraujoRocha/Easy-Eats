@@ -19,18 +19,168 @@ export class NovoPedido {
   categoriaSelecionada = 'Todos';
 
   produtos = [
-    { nome: 'Hambúrguer Clássico', preco: 22, categoria: 'Lanches', emoji: '🍔' },
-    { nome: 'X-Bacon', preco: 28, categoria: 'Lanches', emoji: '🥓' },
-    { nome: 'X-Salada', preco: 25, categoria: 'Lanches', emoji: '🥗' },
-    { nome: 'Hot Dog', preco: 15, categoria: 'Lanches', emoji: '🌭' },
-    { nome: 'Batata Frita', preco: 12, categoria: 'Acompanhamentos', emoji: '🍟' },
-    { nome: 'Onion Rings', preco: 14, categoria: 'Acompanhamentos', emoji: '🧅' },
-    { nome: 'Nuggets', preco: 16, categoria: 'Acompanhamentos', emoji: '🍗' },
-    { nome: 'Coca-Cola', preco: 7, categoria: 'Bebidas', emoji: '🥤' },
-    { nome: 'Guaraná', preco: 7, categoria: 'Bebidas', emoji: '🧃' },
-    { nome: 'Água', preco: 4, categoria: 'Bebidas', emoji: '💧' },
-    { nome: 'Suco Natural', preco: 10, categoria: 'Bebidas', emoji: '🍊' },
-    { nome: 'Milk Shake', preco: 18, categoria: 'Bebidas', emoji: '🥛' },
+    {
+      nome: 'Hambúrguer Clássico',
+      preco: 22,
+      categoria: 'Lanches',
+      emoji: '🍔',
+      descricao: 'Hambúrguer tradicional artesanal.',
+      ingredientes: [
+        'Pão brioche',
+        'Hambúrguer bovino',
+        'Queijo cheddar',
+        'Alface',
+        'Tomate',
+        'Molho especial'
+      ]
+    },
+
+    {
+      nome: 'X-Bacon',
+      preco: 28,
+      categoria: 'Lanches',
+      emoji: '🥓',
+      descricao: 'Hambúrguer com bastante bacon crocante.',
+      ingredientes: [
+        'Pão brioche',
+        'Hambúrguer bovino',
+        'Bacon crocante',
+        'Queijo cheddar',
+        'Molho barbecue'
+      ]
+    },
+
+    {
+      nome: 'X-Salada',
+      preco: 25,
+      categoria: 'Lanches',
+      emoji: '🥗',
+      descricao: 'Lanche leve com salada fresca.',
+      ingredientes: [
+        'Pão brioche',
+        'Hambúrguer bovino',
+        'Queijo',
+        'Alface',
+        'Tomate',
+        'Cebola roxa',
+        'Molho verde'
+      ]
+    },
+
+    {
+      nome: 'Hot Dog',
+      preco: 15,
+      categoria: 'Lanches',
+      emoji: '🌭',
+      descricao: 'Cachorro-quente completo.',
+      ingredientes: [
+        'Pão',
+        'Salsicha',
+        'Batata palha',
+        'Milho',
+        'Molho de tomate',
+        'Maionese'
+      ]
+    },
+
+    {
+      nome: 'Batata Frita',
+      preco: 12,
+      categoria: 'Acompanhamentos',
+      emoji: '🍟',
+      descricao: 'Batatas fritas crocantes.',
+      ingredientes: [
+        'Batata',
+        'Sal',
+        'Molho opcional'
+      ]
+    },
+
+    {
+      nome: 'Onion Rings',
+      preco: 14,
+      categoria: 'Acompanhamentos',
+      emoji: '🧅',
+      descricao: 'Anéis de cebola empanados.',
+      ingredientes: [
+        'Cebola',
+        'Farinha crocante',
+        'Tempero especial'
+      ]
+    },
+
+    {
+      nome: 'Nuggets',
+      preco: 16,
+      categoria: 'Acompanhamentos',
+      emoji: '🍗',
+      descricao: 'Nuggets de frango empanados.',
+      ingredientes: [
+        'Frango',
+        'Empanado crocante',
+        'Molho especial'
+      ]
+    },
+
+    {
+      nome: 'Coca-Cola',
+      preco: 7,
+      categoria: 'Bebidas',
+      emoji: '🥤',
+      descricao: 'Refrigerante gelado.',
+      ingredientes: [
+        '350ml'
+      ]
+    },
+
+    {
+      nome: 'Guaraná',
+      preco: 7,
+      categoria: 'Bebidas',
+      emoji: '🧃',
+      descricao: 'Refrigerante sabor guaraná.',
+      ingredientes: [
+        '350ml'
+      ]
+    },
+
+    {
+      nome: 'Água',
+      preco: 4,
+      categoria: 'Bebidas',
+      emoji: '💧',
+      descricao: 'Água mineral sem gás.',
+      ingredientes: [
+        '500ml'
+      ]
+    },
+
+    {
+      nome: 'Suco Natural',
+      preco: 10,
+      categoria: 'Bebidas',
+      emoji: '🍊',
+      descricao: 'Suco natural feito na hora.',
+      ingredientes: [
+        'Fruta natural',
+        'Gelo',
+        'Açúcar opcional'
+      ]
+    },
+
+    {
+      nome: 'Milk Shake',
+      preco: 18,
+      categoria: 'Bebidas',
+      emoji: '🥛',
+      descricao: 'Milk shake cremoso e gelado.',
+      ingredientes: [
+        'Sorvete',
+        'Leite',
+        'Cobertura',
+        'Chantilly'
+      ]
+    }
   ];
 
   carrinho: any[] = [];
@@ -77,8 +227,15 @@ export class NovoPedido {
   confirmarPedido() {
     console.log('Pedido:', this.carrinho);
   }
+  produtoSelecionado: any = null;
+  modalAberto = false;
 
   abrirDetalhes(produto: any) {
-    alert(`Detalhes do produto:\n\n${produto.nome}\nPreço: R$ ${produto.preco.toFixed(2)}`);
+    this.produtoSelecionado = produto;
+    this.modalAberto = true;
+  }
+
+  fecharModal() {
+    this.modalAberto = false;
   }
 }

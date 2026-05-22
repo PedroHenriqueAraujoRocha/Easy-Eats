@@ -1,45 +1,30 @@
-<div class="page">
+<div class="pedido-page">
   <div class="wrapper">
     <!-- ESQUERDA -->
     <div class="conteudo">
       <h2>Novo Pedido</h2>
 
-      <input
-        type="text"
-        placeholder="Nome do cliente (opcional)"
-        [(ngModel)]="cliente"
-        class="cliente-input"
-      />
+      <input type="text" placeholder="Nome do cliente (opcional)" [(ngModel)]="cliente" class="cliente-input" />
 
       <!-- Categorias -->
       <div class="categorias">
-        <button
-          *ngFor="let cat of categorias"
-          [class.active]="categoriaSelecionada === cat"
-          (click)="selecionarCategoria(cat)"
-        >
+        <button *ngFor="let cat of categorias" [class.active]="categoriaSelecionada === cat"
+          (click)="selecionarCategoria(cat)">
           {{ cat }}
         </button>
       </div>
 
       <!-- Produtos -->
       <div class="produtos">
-        <div
-          class="card"
-          *ngFor="let produto of produtosFiltrados()"
-          (click)="adicionarAoCarrinho(produto)"
-        >
+        <div class="card" *ngFor="let produto of produtosFiltrados()" (click)="adicionarAoCarrinho(produto)">
           <div class="emoji">{{ produto.emoji }}</div>
 
           <div class="info">
             <h4>{{ produto.nome }}</h4>
             <span>R$ {{ produto.preco.toFixed(2) }}</span>
           </div>
-          <button
-            class="info-btn"
-            (click)="abrirDetalhes(produto); $event.stopPropagation()"
-            aria-label="Detalhes do produto"
-          >
+          <button class="info-btn" (click)="abrirDetalhes(produto); $event.stopPropagation()"
+            aria-label="Detalhes do produto">
             i
           </button>
         </div>
@@ -76,6 +61,39 @@
 
       <button class="finalizar" (click)="confirmarPedido()">Finalizar Pedido</button>
     </div>
+    <div class="overlay" *@if="modalAberto" (click)="fecharModal()">
+
+  <div class="modal-produto" (click)="$event.stopPropagation()">
+
+    <button class="fechar" (click)="fecharModal()">
+      ✕
+    </button>
+
+    <div class="emoji">
+      {{ produtoSelecionado.emoji }}
+    </div>
+
+    <h2>{{ produtoSelecionado.nome }}</h2>
+
+    <p class="descricao">
+      {{ produtoSelecionado.descricao }}
+    </p>
+
+    <h4>Ingredientes</h4>
+
+    <ul>
+      <li *@For="let item of produtoSelecionado.ingredientes">
+        {{ item }}
+      </li>
+    </ul>
+
+    <div class="preco">
+      R$ {{ produtoSelecionado.preco.toFixed(2) }}
+    </div>
+
+  </div>
+
+</div>
     <app-navbar></app-navbar>
   </div>
 </div>
