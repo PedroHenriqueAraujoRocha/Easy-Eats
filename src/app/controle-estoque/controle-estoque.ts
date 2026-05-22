@@ -1,44 +1,55 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Navbar } from '../../components/navbar';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+interface Produto {
+  id: string;
+  nome: string;
+  categoria: string;
+  quantidade: number;
+  quantidadeMinima: number;
+  unidade: string;
+  emoji: string;
+}
+
+interface Movimentacao {
+  id: string;
+  nomeProduto: string;
+  tipo: 'entrada' | 'saida';
+  quantidade: number;
+  data: Date;
+}
 
 @Component({
   selector: 'app-controle-estoque',
-  standalone: true,
-  imports: [CommonModule, FormsModule, Navbar],
   templateUrl: './controle-estoque.html',
-  styleUrls: ['./controle-estoque.scss'],
+  styleUrls: ['./controle-estoque.scss']
 })
-export class ControleEstoque {
-  estoqueBaixo = [
-    { nome: 'Batata Frita', emoji: '🍟', atual: 3, minimo: 10 },
-    { nome: 'Guaraná', emoji: '🥤', atual: 2, minimo: 10 },
+export class ControleEstoque implements OnInit {
+  produtos: Produto[] = [
+    { id: "1", nome: "Pão de Hamburguer", categoria: "Pães", quantidade: 15, quantidadeMinima: 30, unidade: "un", emoji: "🍔" },
+    { id: "2", nome: "Carne Bovina", categoria: "Carnes", quantidade: 8, quantidadeMinima: 20, unidade: "kg", emoji: "🥩" },
+    { id: "3", nome: "Queijo Cheddar", categoria: "Laticínios", quantidade: 12, quantidadeMinima: 15, unidade: "kg", emoji: "🧀" },
+    { id: "4", nome: "Alface", categoria: "Vegetais", quantidade: 25, quantidadeMinima: 20, unidade: "un", emoji: "🥬" },
+    { id: "5", nome: "Tomate", categoria: "Vegetais", quantidade: 30, quantidadeMinima: 25, unidade: "kg", emoji: "🍅" },
+    { id: "6", nome: "Batata Congelada", categoria: "Congelados", quantidade: 5, quantidadeMinima: 15, unidade: "kg", emoji: "🍟" },
+    { id: "7", nome: "Refrigerante", categoria: "Bebidas", quantidade: 40, quantidadeMinima: 30, unidade: "un", emoji: "🥤" },
   ];
 
-  tipoMovimentacao: 'entrada' | 'saida' = 'entrada';
+  movimentacoes: Movimentacao[] = [
+    { id: "1", nomeProduto: "Pão de Hamburguer", tipo: "saida", quantidade: 10, data: new Date(2026, 4, 20, 19, 30) },
+    { id: "2", nomeProduto: "Carne Bovina", tipo: "entrada", quantidade: 20, data: new Date(2026, 4, 19, 14, 15) },
+    { id: "3", nomeProduto: "Refrigerante", tipo: "saida", quantidade: 15, data: new Date(2026, 4, 18, 20, 0) },
+  ];
 
-  produtos = ['Batata Frita', 'Guaraná', 'Hambúrguer', 'Refrigerante'];
+  estoqueBaixo: Produto[] = [];
 
-  produtoSelecionado = '';
-  quantidade = '';
-  observacao = '';
+  constructor(private router: Router) {}
 
-  alternarTipo(tipo: 'entrada' | 'saida') {
-    this.tipoMovimentacao = tipo;
+  ngOnInit(): void {
+    this.estoqueBaixo = this.produtos.filter(p => p.quantidade < p.quantidadeMinima);
   }
 
-  registrarMovimentacao() {
-    if (!this.produtoSelecionado || !this.quantidade) {
-      alert('Selecione o produto e informe a quantidade!');
-      return;
-    }
-    // Aqui você pode adicionar lógica para salvar o movimento
-    alert(`${this.tipoMovimentacao === 'entrada' ? 'Entrada' : 'Saída'} registrada com sucesso!`);
-
-    // Resetar campos
-    this.produtoSelecionado = '';
-    this.quantidade = '';
-    this.observacao = '';
+  acessarRota(rota: string): void {
+    this.router.navigate([rota]);
   }
 }

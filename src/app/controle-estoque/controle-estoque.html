@@ -1,74 +1,84 @@
-<div class="controle-estoque">
-  <h2>Controle de Estoque</h2>
-
-  <div class="alerta-estoque-baixo" *ngIf="estoqueBaixo.length > 0" role="alert" aria-live="polite">
-    <strong>⚠️ Estoque Baixo</strong>
-    <ul>
-      <li *ngFor="let item of estoqueBaixo">
-        <span class="emoji">{{ item.emoji }}</span> {{ item.nome }}
-        <span class="quantidade">{{ item.atual }} / mín. {{ item.minimo }}</span>
-      </li>
-    </ul>
+<div class="page-container">
+  <div class="header-section">
+    <h1>Estoque e Histórico</h1>
+    <button class="btn-voltar" (click)="acessarRota('/perfil-admin')">Voltar</button>
   </div>
 
-  <section class="movimentacao">
-    <header class="tabs">
-      <button
-        [class.active]="tipoMovimentacao === 'entrada'"
-        (click)="alternarTipo('entrada')"
-        aria-pressed="{{ tipoMovimentacao === 'entrada' }}"
-        type="button"
-      >
-        📦 Entrada
-      </button>
-      <button
-        [class.active]="tipoMovimentacao === 'saida'"
-        (click)="alternarTipo('saida')"
-        aria-pressed="{{ tipoMovimentacao === 'saida' }}"
-        type="button"
-      >
-        📤 Saída
-      </button>
-    </header>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="valor">{{ produtos.length }}</div>
+      <div class="paragrafo">Total de Itens</div>
+    </div>
 
-    <form (ngSubmit)="registrarMovimentacao()" class="form-movimentacao" #form="ngForm" novalidate>
-      <select
-        required
-        [(ngModel)]="produtoSelecionado"
-        name="produto"
-        aria-label="Selecione o produto"
-      >
-        <option value="" disabled selected>Selecione o produto</option>
-        <option *ngFor="let produto of produtos" [value]="produto">{{ produto }}</option>
-      </select>
+    <div class="summary-card">
+      <div class="valor warning">{{ estoqueBaixo.length }}</div>
+      <div class="paragrafo">Estoque Baixo</div>
+    </div>
 
-      <input
-        type="number"
-        min="1"
-        required
-        placeholder="Quantidade"
-        [(ngModel)]="quantidade"
-        name="quantidade"
-        aria-label="Quantidade"
-      />
+    <div class="summary-card">
+      <div class="valor">{{ movimentacoes.length }}</div>
+      <div class="paragrafo">Movimentações</div>
+    </div>
+  </div>
 
-      <input
-        type="text"
-        placeholder="Obs (opcional)"
-        [(ngModel)]="observacao"
-        name="observacao"
-        aria-label="Observação"
-      />
+  <div class="card-form mb-25">
+    <div class="list-header">
+      <h3>Estoque Atual</h3>
+    </div>
 
-      <button type="button" (click)="registrarMovimentacao()" class="btn-registrar">
-        + Registrar {{ tipoMovimentacao === 'entrada' ? 'Entrada' : 'Saída' }}
-      </button>
-    </form>
-  </section>
+    <div class="list-container">
+      @for (produto of produtos; track produto.id) {
+        <div class="list-item">
+          <span class="item-name">
+            <span class="emoji">{{ produto.emoji }}</span> {{ produto.nome }}
+          </span>
+          
+          @if (produto.quantidade < produto.quantidadeMinima) {
+            <span class="item-info">
+              {{ produto.quantidade }} {{ produto.unidade }} 
+              <span class="status-badge error">Baixo</span>
+            </span>
+          }
+          
+          @if (produto.quantidade >= produto.quantidadeMinima) {
+            <span class="item-info">
+              {{ produto.quantidade }} {{ produto.unidade }} 
+              <span class="status-badge success">Ok</span>
+            </span>
+          }
+        </div>
+      }
+    </div>
+  </div>
 
-  <section class="historico">
-    <h3>Histórico de Movimentações</h3>
-    <p>Nenhuma movimentação registrada.</p>
-  </section>
-  <app-navbar></app-navbar>
+  <div class="card-form">
+    <div class="list-header">
+      <h3>Últimas Movimentações</h3>
+    </div>
+
+    <div class="list-container">
+      @for (mov of movimentacoes; track mov.id) {
+        <div class="list-item">
+          <span class="item-name">
+            <span class="emoji">{{ mov.tipo === 'entrada' ? '📦' : '📤' }}</span> {{ mov.nomeProduto }}
+          </span>
+          
+          @if (mov.tipo === 'entrada') {
+            <span class="item-info">
+              +{{ mov.quantidade }} 
+              <span class="status-badge success">Entrada</span>
+            </span>
+          }
+
+          @if (mov.tipo === 'saida') {
+            <span class="item-info">
+              -{{ mov.quantidade }} 
+              <span class="status-badge warning-bg">Saída</span>
+            </span>
+          }
+        </div>
+      }
+    </div>
+  </div>
 </div>
+
