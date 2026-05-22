@@ -12,6 +12,9 @@
   margin: 0 auto;
 }
 
+/* ========================= */
+/* HEADER & BUTTONS */
+/* ========================= */
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -27,10 +30,16 @@
     padding-left: 15px;
   }
 
+  .acoes-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
   .btn-voltar {
     background: white;
     border: 1px solid #ffdec2;
-    padding: 8px 20px;
+    padding: 8px 20px; /* Igual ao seu código de exemplo */
     border-radius: 8px;
     cursor: pointer;
     color: #ff8c00;
@@ -40,6 +49,22 @@
     &:hover {
       background: #fff5eb;
       border-color: #ff8c00;
+    }
+  }
+
+  .btn-primary {
+    background: #ff8c00;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+    font-size: 14px;
+
+    &:hover {
+      background: #e67e00;
     }
   }
 }
