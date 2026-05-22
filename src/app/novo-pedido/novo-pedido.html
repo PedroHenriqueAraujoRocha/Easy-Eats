@@ -7,12 +7,12 @@
         type="text"
         placeholder="Nome do cliente (opcional)"
         [(ngModel)]="cliente"
-        class="cliente-input"
+        class="input-busca"
       />
 
-      <div class="categorias">
+      <div class="filtros">
         @for (cat of categorias; track cat) {
-          <button [class.active]="categoriaSelecionada === cat" (click)="selecionarCategoria(cat)">
+          <button [class.ativo]="categoriaSelecionada === cat" (click)="selecionarCategoria(cat)">
             {{ cat }}
           </button>
         }
@@ -20,12 +20,12 @@
 
       <div class="produtos">
         @for (produto of produtosFiltrados(); track $index) {
-          <div class="card" (click)="adicionarAoCarrinho(produto)">
+          <div class="card produto-card" (click)="adicionarAoCarrinho(produto)">
             <div class="emoji">{{ produto.emoji }}</div>
 
             <div class="info">
               <h4>{{ produto.nome }}</h4>
-              <span>R$ {{ produto.preco.toFixed(2) }}</span>
+              <span class="preco-destaque">R$ {{ produto.preco.toFixed(2) }}</span>
             </div>
             <button
               class="info-btn"
@@ -104,14 +104,14 @@
     }
 
     <app-navbar></app-navbar>
-    
-  @if (produtoSelecionado) {
-  <app-modal-produto
-  [produto]="produtoSelecionado"
-  (fechar)="fecharModal()"
-  (adicionar)="adicionarAoCarrinho($event)">
-  </app-modal-produto>
-  }
 
+    @if (produtoSelecionado) {
+      <app-modal-produto
+        [produto]="produtoSelecionado"
+        (fechar)="fecharModal()"
+        (adicionar)="adicionarAoCarrinho($event)"
+      >
+      </app-modal-produto>
+    }
   </div>
 </div>
