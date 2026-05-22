@@ -1,0 +1,29 @@
+@if (produto) {
+  <div class="modal-overlay" (click)="fecharModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      
+      <button class="btn-fechar" (click)="fecharModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <div class="modal-header">
+        <div class="emoji-grande">{{ produto.emoji }}</div>
+        <h3>{{ produto.nome }}</h3>
+        <span class="preco-destaque">R$ {{ produto.preco.toFixed(2) }}</span>
+      </div>
+
+      <div class="modal-body">
+        <p class="descricao">
+          Delicioso lanche feito com ingredientes frescos. Personalize como quiser!
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-adicionar" (click)="adicionarProduto()">
+          Adicionar ao Pedido
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

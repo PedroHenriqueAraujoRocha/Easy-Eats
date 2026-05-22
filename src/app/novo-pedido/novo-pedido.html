@@ -1,99 +1,91 @@
-<div class="pedido-page">
+<div class="container-padrao page">
   <div class="wrapper">
-    <!-- ESQUERDA -->
     <div class="conteudo">
-      <h2>Novo Pedido</h2>
+      <h2 class="titulo-padrao">Novo Pedido</h2>
 
-      <input type="text" placeholder="Nome do cliente (opcional)" [(ngModel)]="cliente" class="cliente-input" />
+      <input
+        type="text"
+        placeholder="Nome do cliente (opcional)"
+        [(ngModel)]="cliente"
+        class="input-busca"
+      />
 
-      <!-- Categorias -->
-      <div class="categorias">
-        <button *ngFor="let cat of categorias" [class.active]="categoriaSelecionada === cat"
-          (click)="selecionarCategoria(cat)">
+      <div class="filtros">
+        <button
+          *ngFor="let cat of categorias"
+          [class.ativo]="categoriaSelecionada === cat"
+          (click)="selecionarCategoria(cat)"
+        >
+
           {{ cat }}
         </button>
       </div>
 
-      <!-- Produtos -->
       <div class="produtos">
-        <div class="card" *ngFor="let produto of produtosFiltrados()" (click)="adicionarAoCarrinho(produto)">
+
+        <div
+          class="card produto-card"
+          *ngFor="let produto of produtosFiltrados()"
+          (click)="adicionarAoCarrinho(produto)"
+        >
           <div class="emoji">{{ produto.emoji }}</div>
 
           <div class="info">
             <h4>{{ produto.nome }}</h4>
-            <span>R$ {{ produto.preco.toFixed(2) }}</span>
+            <span class="preco-destaque">R$ {{ produto.preco.toFixed(2) }}</span>
           </div>
-          <button class="info-btn" (click)="abrirDetalhes(produto); $event.stopPropagation()"
-            aria-label="Detalhes do produto">
-            i
+
+          <button
+            class="info-btn"
+            (click)="abrirDetalhes(produto); $event.stopPropagation()"
+            aria-label="Detalhes do produto"
+          >
+            <i class="bi bi-info"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- DIREITA (Carrinho) -->
     <div class="carrinho" *ngIf="carrinho.length > 0">
       <h3>🛒 Carrinho ({{ carrinho.length }})</h3>
 
-      <div *ngFor="let item of carrinho; let i = index" class="item">
-        <div class="left">
-          <span class="emoji">{{ item.emoji }}</span>
-          <span class="nome">{{ item.nome }}</span>
-        </div>
-
-        <div class="right">
-          <div class="qtd">
-            <button (click)="diminuirQtd(i)">−</button>
-            <span>{{ item.qtd }}</span>
-            <button (click)="aumentarQtd(i)">+</button>
+      <div class="itens-carrinho">
+        <div *ngFor="let item of carrinho; let i = index" class="item">
+          <div class="left">
+            <span class="emoji">{{ item.emoji }}</span>
+            <span class="nome">{{ item.nome }}</span>
           </div>
 
-          <span class="preco"> R$ {{ (item.preco * item.qtd).toFixed(2) }} </span>
+          <div class="right">
+            <div class="qtd">
+              <button class="btn-qtd" (click)="diminuirQtd(i)">−</button>
+              <span>{{ item.qtd }}</span>
+              <button class="btn-qtd" (click)="aumentarQtd(i)">+</button>
+            </div>
+            <span class="preco"> R$ {{ (item.preco * item.qtd).toFixed(2) }} </span>
+          </div>
         </div>
       </div>
 
-      <hr />
+      <hr class="divisor" />
 
       <div class="total">
         <span>Total</span>
-        <strong>R$ {{ total().toFixed(2) }}</strong>
+        <strong class="valor-pedido">R$ {{ total().toFixed(2) }}</strong>
       </div>
 
       <button class="finalizar" (click)="confirmarPedido()">Finalizar Pedido</button>
     </div>
-    <div class="overlay" *@if="modalAberto" (click)="fecharModal()">
 
-  <div class="modal-produto" (click)="$event.stopPropagation()">
-
-    <button class="fechar" (click)="fecharModal()">
-      ✕
-    </button>
-
-    <div class="emoji">
-      {{ produtoSelecionado.emoji }}
-    </div>
-
-    <h2>{{ produtoSelecionado.nome }}</h2>
-
-    <p class="descricao">
-      {{ produtoSelecionado.descricao }}
-    </p>
-
-    <h4>Ingredientes</h4>
-
-    <ul>
-      <li *@For="let item of produtoSelecionado.ingredientes">
-        {{ item }}
-      </li>
-    </ul>
-
-    <div class="preco">
-      R$ {{ produtoSelecionado.preco.toFixed(2) }}
-    </div>
-
-  </div>
-
-</div>
     <app-navbar></app-navbar>
+    
+  @if (produtoSelecionado) {
+  <app-modal-produto
+  [produto]="produtoSelecionado"
+  (fechar)="fecharModal()"
+  (adicionar)="adicionarAoCarrinho($event)">
+  </app-modal-produto>
+  }
+
   </div>
 </div>
