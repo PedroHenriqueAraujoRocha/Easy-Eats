@@ -232,7 +232,6 @@ export class NovoPedido {
     this.cliente = '';
 
   }
-  produtoSelecionado: any = null;
   modalAberto = false;
 
   abrirDetalhes(produto: any) {
