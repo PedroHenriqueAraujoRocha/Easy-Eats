@@ -45,6 +45,13 @@
   padding: 20px;
   box-shadow: none;
 
+  &__titulo {
+    margin: 0 0 18px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+  }
+
   .input-group {
     margin-bottom: 22px;
     display: flex;
@@ -77,10 +84,10 @@
     }
   }
 
-  .input-group--toggle {
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 22px;
+  .erro-campo {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 5px;
   }
 
   .input-row {
@@ -89,8 +96,13 @@
     gap: 20px;
   }
 
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+
   .btn-save {
-    width: 100%;
+    flex: 1;
     background: var(--color-primary);
     color: white;
     border: none;
@@ -105,17 +117,25 @@
     &:hover {
       background: var(--color-primary-hover);
     }
+  }
 
-    &:disabled {
-      background: #f3d5b5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+  .btn-cancelar {
+    padding: 15px 20px;
+    background: #fff;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f3f4f6;
     }
   }
 }
 
-.lista-produtos {
+.lista-ingredientes {
   margin-top: 32px;
 
   h2 {
@@ -131,150 +151,63 @@
   }
 }
 
-.produto-item {
+.ingrediente-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   margin-bottom: 10px;
-  overflow: hidden;
-
-  &__header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    font: inherit;
-    color: inherit;
-
-    &:hover {
-      background: #fafafa;
-    }
-  }
 
   &__info {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    strong {
+      color: #111827;
+      font-size: 14.5px;
+    }
+
+    .detalhe {
+      color: #6b7280;
+      font-size: 12.5px;
+    }
   }
 
-  &__detalhes {
-    border-top: 1px solid #e5e7eb;
-    padding: 16px;
+  &__acoes {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background: #fafafa;
+    gap: 6px;
+    flex-shrink: 0;
   }
 }
 
-.badge-natureza {
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--color-primary);
-  background: #fff7ed;
-  border-radius: 999px;
-  padding: 2px 10px;
-}
+.btn-icone {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 13.5px;
 
-.produto-item .preco {
-  font-weight: 700;
-  color: #111827;
-}
-
-.bloco-detalhe {
-  h4 {
-    margin: 0 0 4px;
-    font-size: 14px;
+  &:hover {
+    background: #f8f5f2;
     color: #111827;
   }
 
-  .ajuda {
-    margin: 0 0 10px;
-    font-size: 12.5px;
-    color: #6b7280;
-  }
-}
-
-.lista-chips {
-  list-style: none;
-  margin: 0 0 12px;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.vazio-inline {
-  font-size: 12.5px;
-  color: #9ca3af;
-}
-
-.chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  background: white;
-  font-size: 12.5px;
-  color: #374151;
-
-  &__remover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: none;
-    color: #9ca3af;
-    cursor: pointer;
-    padding: 0;
-
-    &:hover {
-      color: #dc2626;
-    }
-  }
-}
-
-.linha-adicionar {
-  display: flex;
-  gap: 8px;
-
-  input {
-    flex: 1;
-    padding: 9px 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 13.5px;
-    background: white;
-
-    &.input-preco {
-      flex: 0 0 110px;
-    }
-  }
-
-  button {
-    padding: 9px 14px;
-    border: none;
-    border-radius: 6px;
-    background: var(--color-primary);
-    color: white;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-
-    &:hover {
-      background: var(--color-primary-hover);
-    }
+  &--perigo:hover {
+    color: #dc2626;
+    border-color: #fecaca;
+    background: #fef2f2;
   }
 }
 
@@ -283,11 +216,8 @@
     padding: 20px 16px 60px;
   }
 
-  .produto-item__header {
-    flex-wrap: wrap;
-  }
-
-  .linha-adicionar {
-    flex-wrap: wrap;
+  .card-form .input-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }

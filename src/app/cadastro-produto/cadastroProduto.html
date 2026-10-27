@@ -1,7 +1,7 @@
 <div class="pagina">
   <header class="topo">
-    <h1>Novo Produto</h1>
-    <p>Cadastre um novo item no catálogo</p>
+    <h1>Cadastro de Ingredientes</h1>
+    <p>Cadastre os ingredientes com unidade de medida, preço de custo e estoque</p>
   </header>
 
   @if (erro) {
@@ -9,175 +9,83 @@
   }
 
   <div class="card-form">
+    <h2 class="card-form__titulo">{{ editandoId !== null ? 'Editar ingrediente' : 'Novo ingrediente' }}</h2>
+
     <form [formGroup]="form" (ngSubmit)="salvar()">
       <div class="input-group">
-        <label>Nome do Produto</label>
-        <input type="text" placeholder="Ex: Hambúrguer Clássico" formControlName="nome" />
+        <label>Nome do ingrediente</label>
+        <input type="text" placeholder="Ex: Pão brioche" formControlName="nome" />
+        @if (form.controls.nome.touched && form.controls.nome.errors?.['required']) {
+          <small class="erro-campo">Nome é obrigatório.</small>
+        }
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label>Unidade de medida</label>
+          <select formControlName="unidade">
+            <option [ngValue]="null">Selecione...</option>
+            @for (unidade of unidades; track unidade) {
+              <option [ngValue]="unidade">{{ unidade }}</option>
+            }
+          </select>
+          @if (form.controls.unidade.touched && form.controls.unidade.errors?.['required']) {
+            <small class="erro-campo">Escolha a unidade.</small>
+          }
+        </div>
+
+        <div class="input-group">
+          <label>Preço de custo (R$ por unidade)</label>
+          <input type="number" step="any" min="0" placeholder="0.00" formControlName="custo" />
+          @if (form.controls.custo.touched && form.controls.custo.invalid) {
+            <small class="erro-campo">Informe um custo maior ou igual a zero.</small>
+          }
+        </div>
       </div>
 
       <div class="input-group">
-        <label>Descrição</label>
-        <input type="text" placeholder="Ex: Pão, hambúrguer, queijo, alface e tomate" formControlName="descricao" />
-      </div>
-
-      <div class="input-row">
-        <div class="input-group">
-          <label>Categoria</label>
-          <select formControlName="categoriaId">
-            <option [ngValue]="null">Selecione...</option>
-            @for (categoria of categorias; track categoria.id) {
-              <option [ngValue]="categoria.id">{{ categoria.nome }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label>Natureza</label>
-          <select formControlName="natureza">
-            <option [ngValue]="null">Selecione...</option>
-            @for (opcao of naturezas; track opcao.valor) {
-              <option [ngValue]="opcao.valor">{{ opcao.label }}</option>
-            }
-          </select>
-        </div>
-      </div>
-
-      <div class="input-row">
-        <div class="input-group">
-          <label>Preço (R$)</label>
-          <input type="number" step="0.01" placeholder="0.00" formControlName="preco" />
-        </div>
-
-        <div class="input-group">
-          <label>Custo (R$)</label>
-          <input type="number" step="0.01" placeholder="0.00" formControlName="custo" />
-        </div>
-      </div>
-
-      <div class="input-group input-group--toggle">
-        <app-toggle-switch
-          [checked]="form.controls.flAtivo.value"
-          label="Produto ativo"
-          (checkedChange)="form.controls.flAtivo.setValue($event)"
-        ></app-toggle-switch>
+        <label>Quantidade em estoque</label>
+        <input type="number" step="any" min="0" placeholder="0" formControlName="estoque" />
+        @if (form.controls.estoque.touched && form.controls.estoque.invalid) {
+          <small class="erro-campo">Informe uma quantidade maior ou igual a zero.</small>
+        }
       </div>
 
       <div class="actions">
-        <button type="submit" class="btn-save" [disabled]="form.invalid || enviando">
-          <span>+</span> {{ enviando ? 'Salvando...' : 'Cadastrar Produto' }}
+        <button type="submit" class="btn-save">
+          {{ editandoId !== null ? 'Salvar alterações' : '+ Cadastrar ingrediente' }}
         </button>
+        @if (editandoId !== null) {
+          <button type="button" class="btn-cancelar" (click)="cancelarEdicao()">Cancelar</button>
+        }
       </div>
     </form>
   </div>
 
-  <section class="lista-produtos">
-    <h2>Produtos cadastrados</h2>
+  <section class="lista-ingredientes">
+    <h2>Ingredientes cadastrados ({{ ingredientes.length }})</h2>
 
-    @if (carregando) {
-      <app-carregando texto="Carregando produtos..."></app-carregando>
-    } @else if (produtos.length === 0) {
-      <p class="vazio">Nenhum produto cadastrado ainda.</p>
-    } @else {
-      @for (produto of produtos; track produto.id) {
-        <div class="produto-item">
-          <button class="produto-item__header" (click)="alternarExpandir(produto)">
-            <div class="produto-item__info">
-              <strong>{{ produto.nome }}</strong>
-              <span class="badge-natureza">{{ produto.natureza ?? 'Sem natureza definida' }}</span>
-            </div>
-            <span class="preco">R$ {{ produto.preco.toFixed(2) }}</span>
-            <i class="bi" [ngClass]="produtoExpandidoId === produto.id ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-          </button>
-
-          @if (produtoExpandidoId === produto.id) {
-            <div class="produto-item__detalhes">
-              @if (exibeComposicao) {
-                <div class="bloco-detalhe">
-                  <h4>Composição</h4>
-                  <p class="ajuda">Itens que aparecem como toggle no carrinho (podem ser retirados do pedido).</p>
-
-                  <ul class="lista-chips">
-                    @for (item of composicaoPorProduto[produto.id] ?? []; track item.id) {
-                      <li class="chip">
-                        {{ item.nome }}
-                        <button class="chip__remover" (click)="excluirItemComposicao(produto.id, item.id)" aria-label="Remover item">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </li>
-                    } @empty {
-                      <li class="vazio-inline">Nenhum item de composição cadastrado.</li>
-                    }
-                  </ul>
-
-                  <div class="linha-adicionar">
-                    <input
-                      type="text"
-                      placeholder="Ex: Queijo"
-                      [(ngModel)]="novoItemComposicaoNome"
-                      [ngModelOptions]="{ standalone: true }"
-                      (keyup.enter)="adicionarItemComposicao(produto.id)"
-                    />
-                    <button (click)="adicionarItemComposicao(produto.id)">Adicionar</button>
-                  </div>
-                </div>
-              }
-
-              @if (exibeAdicionais) {
-                <div class="bloco-detalhe">
-                  <h4>Adicionais</h4>
-                  <p class="ajuda">Opções extras oferecidas para este produto no carrinho, com preço.</p>
-
-                  <ul class="lista-chips">
-                    @for (adicional of adicionaisPorProduto[produto.id] ?? []; track adicional.id) {
-                      <li class="chip">
-                        {{ adicional.nome }} — R$ {{ adicional.preco.toFixed(2) }}
-                        <button class="chip__remover" (click)="excluirAdicional(produto.id, adicional.id)" aria-label="Remover adicional">
-                          <i class="bi bi-x"></i>
-                        </button>
-                      </li>
-                    } @empty {
-                      <li class="vazio-inline">Nenhum adicional cadastrado.</li>
-                    }
-                  </ul>
-
-                  <div class="linha-adicionar">
-                    <input
-                      type="text"
-                      placeholder="Ex: Bacon"
-                      [(ngModel)]="novoAdicionalNome"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <input
-                      type="number"
-                      step="0.01"
-                      placeholder="Preço"
-                      class="input-preco"
-                      [(ngModel)]="novoAdicionalPreco"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
-                    <button (click)="adicionarAdicional(produto.id)">Adicionar</button>
-                  </div>
-                </div>
-              }
-
-              @if (!exibeComposicao && !exibeAdicionais) {
-                <p class="ajuda">
-                  Produtos do tipo Insumo não têm composição nem adicionais — eles são usados como matéria-prima de
-                  outros produtos.
-                </p>
-              }
-            </div>
-          }
+    @for (ingrediente of ingredientes; track ingrediente.id) {
+      <div class="ingrediente-item">
+        <div class="ingrediente-item__info">
+          <strong>{{ ingrediente.nome }}</strong>
+          <span class="detalhe">
+            Custo: R$ {{ ingrediente.custo | number: '1.2-4' }} / {{ ingrediente.unidade }}
+            · Estoque: {{ ingrediente.estoque | number: '1.0-3' }} {{ ingrediente.unidade }}
+          </span>
         </div>
-      }
+
+        <div class="ingrediente-item__acoes">
+          <button type="button" class="btn-icone" (click)="editar(ingrediente)" title="Editar">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button type="button" class="btn-icone btn-icone--perigo" (click)="excluir(ingrediente)" title="Excluir">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p class="vazio">Nenhum ingrediente cadastrado ainda.</p>
     }
   </section>
-
-  @if (produtoParaConfirmar) {
-    <app-modal-cadastro-produto
-      [produto]="produtoParaConfirmar"
-      (fechar)="fecharModalConfirmacao()"
-      (cadastrar)="fecharModalConfirmacao()">
-    </app-modal-cadastro-produto>
-  }
 </div>

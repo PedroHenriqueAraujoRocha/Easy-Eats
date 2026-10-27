@@ -11,6 +11,16 @@
   box-sizing: border-box;
 }
 
+.alerta-erro {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
 .topo {
   margin-bottom: 24px;
 }
@@ -43,7 +53,6 @@
   border-radius: 8px;
   padding: 14px 16px;
   text-align: center;
-
   box-shadow: none;
 }
 
@@ -73,7 +82,6 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 16px 18px;
-
   box-shadow: none;
   margin-bottom: 16px;
 }
@@ -91,10 +99,10 @@
 }
 
 .linha {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1.1fr auto;
   align-items: center;
-
+  gap: 14px;
   padding: 12px 0;
   border-bottom: 1px solid #f3f4f6;
   font-size: 14.5px;
@@ -103,6 +111,29 @@
 .linha:last-child {
   border-bottom: none;
   padding-bottom: 0;
+}
+
+.linha.inativo .bloco-nome,
+.linha.inativo .bloco-margem,
+.linha.inativo .bloco-estoque {
+  opacity: 0.55;
+}
+
+.bloco-nome,
+.bloco-margem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bloco-margem {
+  align-items: flex-start;
+}
+
+.detalhe {
+  font-size: 12.5px;
+  color: #9ca3af;
 }
 
 .nome {
@@ -118,12 +149,38 @@
   font-size: 16px;
 }
 
-.info {
+.bloco-estoque {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bloco-acoes {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: flex-end;
+}
+
+.info {
   font-weight: 700;
   color: #111827;
+  min-width: 56px;
+}
+
+.input-estoque {
+  width: 84px;
+  padding: 7px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+
+  &:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+  }
 }
 
 .badge {
@@ -132,6 +189,12 @@
   border-radius: 999px;
   font-weight: 700;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge.neutro {
+  background: #f3f4f6;
+  color: #6b7280;
 }
 
 .badge.sucesso {
@@ -149,106 +212,10 @@
   color: #ea580c;
 }
 
-/* FORMULÁRIO */
-
-.grid-duas-colunas {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 12px;
-  align-items: start;
-}
-
-@media (max-width: 900px) {
-  .grid-duas-colunas {
-    grid-template-columns: 1fr;
-  }
-}
-
-.campo {
-  margin-bottom: 14px;
-  display: flex;
-  flex-direction: column;
-}
-
-.campo label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4b5563;
-  margin-bottom: 6px;
-}
-
-.campo input {
-  padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 7px;
-  font-size: 14px;
-  background: #fafafa;
-}
-
-.campo input:focus {
-  outline: none;
-  border-color: #f97316;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
-}
-
-.campo input[readonly] {
-  color: #9ca3af;
-  cursor: not-allowed;
-}
-
-.erro {
-  color: #dc2626;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.acoes-form {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-salvar {
-  flex: 1;
-  padding: 10px;
-  background: #ea580c;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  font-weight: 600;
-  font-size: 13.5px;
-  cursor: pointer;
-}
-
-.btn-salvar:hover {
-  background: #c2410c;
-}
-
-.btn-cancelar {
-  padding: 10px 14px;
-  background: #fff;
-  color: #6b7280;
-  border: 1px solid #e5e7eb;
-  border-radius: 7px;
-  font-weight: 600;
-  font-size: 13.5px;
-  cursor: pointer;
-}
-
-.btn-cancelar:hover {
-  background: #f3f4f6;
-}
-
-.direita {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
 .btn-icone {
   width: 28px;
   height: 28px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,11 +225,23 @@
   color: #6b7280;
   cursor: pointer;
   font-size: 12.5px;
-}
 
-.btn-icone:hover {
-  background: #f8f5f2;
-  color: #111827;
+  &:hover {
+    background: #f8f5f2;
+    color: #111827;
+  }
+
+  &--ok:hover {
+    color: #16a34a;
+    border-color: #bbf7d0;
+    background: #ecfdf5;
+  }
+
+  &--perigo:hover {
+    color: #dc2626;
+    border-color: #fecaca;
+    background: #fef2f2;
+  }
 }
 
 .vazio {
@@ -271,6 +250,16 @@
   font-size: 13px;
   padding: 20px 0;
   margin: 0;
+}
+
+@media (max-width: 900px) {
+  .linha {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bloco-acoes {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 680px) {

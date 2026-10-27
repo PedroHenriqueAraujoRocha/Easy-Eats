@@ -1,35 +1,116 @@
 <div class="pagina">
   <header class="topo">
     <h1>Ficha Técnica</h1>
-    <p>Insumos e custo de produção de cada produto do cardápio</p>
+    <p>Monte os produtos a partir dos ingredientes cadastrados e veja o custo de produção</p>
   </header>
+
+  @if (erro) {
+    <div class="alerta-erro">{{ erro }}</div>
+  }
+
+  <section class="painel form-painel">
+    <h3>{{ editandoId !== null ? 'Editar produto' : 'Novo produto' }}</h3>
+
+    @if (ingredientes.length === 0) {
+      <p class="vazio">Cadastre ingredientes na tela de Cadastro antes de montar uma ficha técnica.</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="salvar()">
+        <div class="linha-campos">
+          <div class="campo campo--grande">
+            <label>Nome do produto</label>
+            <input type="text" placeholder="Ex: X-Burger" formControlName="nome" />
+            @if (form.controls.nome.touched && form.controls.nome.errors?.['required']) {
+              <small class="erro-campo">Nome é obrigatório.</small>
+            }
+          </div>
+
+          <div class="campo">
+            <label>Preço de venda (R$)</label>
+            <input type="number" step="0.01" min="0" placeholder="0.00" formControlName="precoVenda" />
+            @if (form.controls.precoVenda.touched && form.controls.precoVenda.invalid) {
+              <small class="erro-campo">Informe o preço.</small>
+            }
+          </div>
+        </div>
+
+        <h4 class="subtitulo">Composição</h4>
+
+        <div formArrayName="itens" class="itens">
+          @for (item of itens.controls; track item; let i = $index) {
+            <div class="item-ficha" [formGroupName]="i">
+              <select formControlName="ingredienteId">
+                <option [ngValue]="null">Ingrediente...</option>
+                @for (ingrediente of ingredientes; track ingrediente.id) {
+                  <option [ngValue]="ingrediente.id">{{ ingrediente.nome }} ({{ ingrediente.unidade }})</option>
+                }
+              </select>
+
+              <div class="qtd">
+                <input type="number" step="any" min="0" placeholder="Qtd." formControlName="quantidade" />
+                <span class="unidade">{{ unidadeDoItem(i) }}</span>
+              </div>
+
+              <button type="button" class="btn-icone btn-icone--perigo" (click)="removerItem(i)" title="Remover ingrediente">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          }
+        </div>
+
+        <button type="button" class="btn-add" (click)="adicionarItem()">+ Adicionar ingrediente</button>
+
+        <div class="previa">
+          <span>Custo: <strong>R$ {{ previa.custo | number: '1.2-2' }}</strong></span>
+          <span>Lucro: <strong>R$ {{ previa.lucro | number: '1.2-2' }}</strong></span>
+          <span>
+            Margem:
+            <strong>{{ previa.percentual === null ? '—' : (previa.percentual | number: '1.1-1') + '%' }}</strong>
+          </span>
+        </div>
+
+        <div class="acoes-form">
+          <button type="submit" class="btn-salvar">
+            {{ editandoId !== null ? 'Salvar alterações' : 'Cadastrar produto' }}
+          </button>
+          @if (editandoId !== null) {
+            <button type="button" class="btn-cancelar" (click)="cancelarEdicao()">Cancelar</button>
+          }
+        </div>
+      </form>
+    }
+  </section>
 
   <div class="lista-produtos">
     @for (produto of produtos; track produto.id) {
       <section class="painel produto-card">
-        <button type="button" class="cabecalho-produto" (click)="alternarExpansao(produto)">
-          <span class="titulo">
-            <i class="bi" [ngClass]="produto.icone"></i>
-            {{ produto.nome }}
-          </span>
+        <div class="cabecalho-produto">
+          <button type="button" class="titulo-btn" (click)="alternarExpansao(produto)">
+            <span class="titulo">
+              <i class="bi bi-egg-fried"></i>
+              {{ produto.nome }}
+            </span>
+            <i class="bi" [ngClass]="expandidos.has(produto.id) ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+          </button>
 
           <span class="direita">
-            <span class="badge neutro">Custo: R$ {{ custoTotal(produto) | number: '1.2-2' }}</span>
-            <i class="bi" [ngClass]="produto.expandido ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+            <span class="badge neutro">Custo: R$ {{ margemDe(produto).custo | number: '1.2-2' }}</span>
+            <span class="badge neutro">Venda: R$ {{ produto.precoVenda | number: '1.2-2' }}</span>
+            <button type="button" class="btn-icone" (click)="editar(produto)" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button type="button" class="btn-icone btn-icone--perigo" (click)="excluir(produto)" title="Excluir">
+              <i class="bi bi-trash"></i>
+            </button>
           </span>
-        </button>
+        </div>
 
-        @if (produto.expandido) {
+        @if (expandidos.has(produto.id)) {
           <div class="lista">
-            @for (insumo of produto.insumos; track insumo.nome) {
+            @for (item of produto.itens; track item.ingredienteId) {
               <div class="linha">
                 <div class="info">
-                  <strong>{{ insumo.nome }}</strong>
-                  <span>{{ insumo.quantidade }}</span>
-                </div>
-
-                <div class="direita">
-                  <span>R$ {{ insumo.custoUnitario | number: '1.2-2' }} / unid.</span>
+                  <strong>{{ nomeIngrediente(item.ingredienteId) }}</strong>
+                  <span>{{ item.quantidade | number: '1.0-4' }} {{ unidadeIngrediente(item.ingredienteId) }}</span>
                 </div>
               </div>
             }

@@ -1,106 +1,99 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Insumo, InsumoService } from './insumo.service';
-import { MensagemErroApiUtil } from '../utils/mensagemErroApiUtil';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ToggleSwitchComponent } from '../../components/toggle-switch/toggle-switch';
+import { FichaTecnicaService, Margem, Produto } from '../ficha-tecnica/ficha-tecnica.service';
+
 
 @Component({
   selector: 'app-controle-estoque',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ToggleSwitchComponent],
   templateUrl: './controle-estoque.html',
   styleUrls: ['./controle-estoque.scss'],
 })
 export class ControleEstoque implements OnInit {
-  private fb = new FormBuilder();
-
-  insumos: Insumo[] = [];
-  carregando = true;
-  salvando = false;
+  produtos: Produto[] = [];
+  editandoId: number | null = null;
+  estoqueEditado: number | null = null;
   erro: string | null = null;
-  editandoNome: string | null = null;
 
-  form = this.fb.group({
-    nome: ['', Validators.required],
-    quantidade: [0, [Validators.required, Validators.min(0)]],
-    unidade: ['', Validators.required],
-  });
-
-  constructor(private insumoService: InsumoService) {}
+  constructor(private fichaTecnicaService: FichaTecnicaService) {}
 
   ngOnInit() {
     this.carregar();
   }
 
-  carregar() {
-    this.carregando = true;
-    this.insumoService.listar().subscribe({
-      next: (insumos) => {
-        this.insumos = insumos;
-        this.carregando = false;
-      },
-      error: (erro) => {
-        this.erro = MensagemErroApiUtil.extrair(erro, 'Não foi possível carregar o estoque.');
-        this.carregando = false;
-      },
-    });
+  private carregar() {
+    this.produtos = this.fichaTecnicaService.listar();
   }
 
-  get totalItens(): number {
-    return this.insumos.length;
+  get totalProdutos(): number {
+    return this.produtos.length;
   }
 
-  salvar() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+  get totalAtivos(): number {
+    return this.produtos.filter((p) => p.ativo).length;
+  }
 
-    const { nome, quantidade, unidade } = this.form.value;
-    const insumo: Insumo = { nome: nome!, quantidade: quantidade!, unidade: unidade! };
+  get totalInativos(): number {
+    return this.produtos.filter((p) => !p.ativo).length;
+  }
 
-    this.salvando = true;
+  margemDe(produto: Produto): Margem {
+    return this.fichaTecnicaService.margem(produto);
+  }
+
+  /** Classe do selo de margem: verde (>= 30%), laranja (10–30%), vermelho (< 10%). */
+  classeMargem(produto: Produto): string {
+    const { percentual } = this.margemDe(produto);
+    if (percentual === null) return 'neutro';
+    if (percentual >= 30) return 'sucesso';
+    if (percentual >= 10) return 'alerta-fundo';
+    return 'erro';
+  }
+
+  alternarAtivo(produto: Produto, ativo: boolean) {
+    this.fichaTecnicaService.definirAtivo(produto.id, ativo);
+    this.carregar();
+  }
+
+  editarEstoque(produto: Produto) {
     this.erro = null;
-
-    const requisicao =
-      this.editandoNome !== null
-        ? this.insumoService.atualizar(this.editandoNome, insumo)
-        : this.insumoService.cadastrar(insumo);
-
-    requisicao.subscribe({
-      next: () => {
-        this.salvando = false;
-        this.editandoNome = null;
-        this.form.reset({ quantidade: 0 });
-        this.carregar();
-      },
-      error: (erro) => {
-        this.erro = MensagemErroApiUtil.extrair(erro, 'Não foi possível salvar o insumo.');
-        this.salvando = false;
-      },
-    });
-  }
-
-  editar(insumo: Insumo) {
-    this.editandoNome = insumo.nome;
-    this.form.setValue({ nome: insumo.nome, quantidade: insumo.quantidade, unidade: insumo.unidade });
+    this.editandoId = produto.id;
+    this.estoqueEditado = produto.estoque;
   }
 
   cancelarEdicao() {
-    this.editandoNome = null;
-    this.form.reset({ quantidade: 0 });
+    this.editandoId = null;
+    this.estoqueEditado = null;
+    this.erro = null;
   }
 
-  remover(insumo: Insumo) {
-    if (!confirm(`Remover o insumo "${insumo.nome}" do estoque?`)) {
+  salvarEstoque(produto: Produto) {
+    if (this.estoqueEditado === null || this.estoqueEditado < 0 || !Number.isFinite(this.estoqueEditado)) {
+      this.erro = 'Informe uma quantidade em estoque maior ou igual a zero.';
       return;
     }
 
-    this.insumoService.remover(insumo.nome).subscribe({
-      next: () => this.carregar(),
-      error: (erro) => {
-        this.erro = MensagemErroApiUtil.extrair(erro, 'Não foi possível remover o insumo.');
-      },
-    });
+    this.fichaTecnicaService.atualizarEstoque(produto.id, this.estoqueEditado);
+    this.cancelarEdicao();
+    this.carregar();
+  }
+
+  remover(produto: Produto) {
+    if (
+      !confirm(
+        `Remover o produto "${produto.nome}"? A ficha técnica dele também será excluída.`,
+      )
+    ) {
+      return;
+    }
+
+    this.fichaTecnicaService.excluir(produto.id);
+    if (this.editandoId === produto.id) {
+      this.cancelarEdicao();
+    }
+    this.carregar();
   }
 }
