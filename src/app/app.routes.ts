@@ -21,7 +21,7 @@ import { PerfilAdmin } from './perfil-admin/perfilAdmin';
 import { PerfilGarcom } from './perfil-garcom/perfilGarcom';
 import { CadastroProdutoComponent } from './cadastro-produto/cadastroProduto';
 import { CardapioAdmin } from './cardapio-admin/cardapio-admin';
-import { CaixaComponent } from './caixa/caixa';
+//import { CaixaComponent } from './caixa/caixa';//
 import { CuponsCashback } from './cupons-cashback/cupons-cashback';
 import { Mesas } from './mesas/mesas';
 import { Comandas } from './comandas/comandas';
