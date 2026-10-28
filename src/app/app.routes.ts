@@ -66,7 +66,8 @@ export const routes: Routes = [
 
       { path: 'mesas', component: Mesas, canActivate: [funcionalidadeGuard(['OPERACAO'])] },
       { path: 'comandas', component: Comandas, canActivate: [funcionalidadeGuard(['OPERACAO'])] },
-      { path: 'caixa', component: CaixaComponent, canActivate: [funcionalidadeGuard(['CAIXA'])] },
+      // { path: 'caixa', component: CaixaComponent, canActivate: [funcionalidadeGuard(['CAIXA'])] },
+
 
       { path: 'novo-pedido', component: NovoPedido, canActivate: [funcionalidadeGuard(['PEDIDO'])] },
       { path: 'historico-vendas', component: HistoricoVendasComponent, canActivate: [funcionalidadeGuard(['PEDIDO'])] },
